@@ -1,8 +1,19 @@
 <?php require "database.php"; ?>
 
 <?php
-$query = "SELECT * FROM drivers";
-$result = mysqli_query($conn, $query);
+if (isset($_GET["nationality"])) {
+    $nationality = $_GET["nationality"];
+    $query = "SELECT * FROM drivers WHERE nationality = '$nationality'";
+} else {
+    if (isset($_GET["age"])) {
+        $age = $_GET["age"];
+        $query = "SELECT * FROM drivers WHERE dob = '$age'";
+    } else {
+        $query = "SELECT * FROM drivers";
+    }
+}
+    
+    $result = mysqli_query($conn, $query);
 $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
@@ -31,6 +42,40 @@ $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <section class="py-20 bg-gray-900">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center" data-aos="fade-up">Formula 1 Drivers</h2>
+
+            <ul>
+                <li>
+                    <a href="drivers-table.php?nationality=british">
+                        Alle britse coureurs
+                    </a>
+                </li>
+                <li>
+                    <a href="drivers-table.php?nationality=german">
+                        Alle duitse coureurs
+                    </a>
+                </li>
+                <li>
+                    <a href="drivers-table.php?nationality=Malaysian">
+                        Alle Maleisische coureurs
+                    </a>
+                </li>
+                <li>
+                    <a href="drivers-table.php?nationality=Turkish">
+                        Alle Turkse coureurs
+                    </a>
+                </li>
+                <li>
+                    <a href="drivers-table.php?age=<20">
+                        Alle  coureurs < 20
+                    </a>
+                </li>
+                <li>
+                    <a href="drivers-table.php">
+                        Reset
+                    </a>
+                </li>
+            </ul>
+
             <div class="max-w-4xl mx-auto">
                 <div class="bg-gray-800 rounded-xl overflow-hidden shadow-xl" data-aos="fade-up">
                     <div class="overflow-x-auto">
