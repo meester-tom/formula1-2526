@@ -1,19 +1,16 @@
 <?php require "database.php"; ?>
 
 <?php
-if (isset($_GET["nationality"])) {
-    $nationality = $_GET["nationality"];
-    $query = "SELECT * FROM drivers WHERE nationality = '$nationality'";
+
+if (isset($_GET['filter']) && isset($_GET['value'])) {
+    $filter = $_GET['filter'];
+    $value = $_GET['value'];
+    $query = "SELECT * FROM `drivers` WHERE $filter = '$value'";
 } else {
-    if (isset($_GET["age"])) {
-        $age = $_GET["age"];
-        $query = "SELECT * FROM drivers WHERE dob = '$age'";
-    } else {
-        $query = "SELECT * FROM drivers";
-    }
+    $query = "SELECT * FROM drivers";
 }
-    
-    $result = mysqli_query($conn, $query);
+
+$result = mysqli_query($conn, $query);
 $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
@@ -45,34 +42,16 @@ $drivers = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
             <ul>
                 <li>
-                    <a href="drivers-table.php?nationality=british">
-                        Alle britse coureurs
-                    </a>
+                    <a href="/drivers-table.php?filter=nationality&value=british">Filter British</a>
                 </li>
                 <li>
-                    <a href="drivers-table.php?nationality=german">
-                        Alle duitse coureurs
-                    </a>
+                    <a href="/drivers-table.php?filter=nationality&value=german">Filter German</a>
                 </li>
                 <li>
-                    <a href="drivers-table.php?nationality=Malaysian">
-                        Alle Maleisische coureurs
-                    </a>
+                    <a href="/drivers-table.php?nationality=dutch">Filter Dutch</a>
                 </li>
                 <li>
-                    <a href="drivers-table.php?nationality=Turkish">
-                        Alle Turkse coureurs
-                    </a>
-                </li>
-                <li>
-                    <a href="drivers-table.php?age=<20">
-                        Alle  coureurs < 20
-                    </a>
-                </li>
-                <li>
-                    <a href="drivers-table.php">
-                        Reset
-                    </a>
+                    <a href="/drivers-table.php">Reset</a>
                 </li>
             </ul>
 
